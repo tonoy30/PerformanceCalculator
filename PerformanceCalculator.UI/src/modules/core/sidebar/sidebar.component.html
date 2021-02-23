@@ -1,0 +1,32 @@
+<mat-nav-list>
+  <div class="profile-card">
+    <img src="{{user.avatar}}" alt="user_image" />
+    <div>
+      <h2>{{user.name}}</h2>
+      <h4>{{user.email}}</h4>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <h2 matSubheader>Pages</h2>
+  <div *ngFor="let item of pages">
+    <a
+      mat-list-item
+      routerLink="{item.routerLink}"
+      routerLinkActive="lits-item-active"
+    >
+      {{item.name}}
+    </a>
+  </div>
+  <mat-divider></mat-divider>
+  <h2 matSubheader>Tools</h2>
+  <div *ngFor="let item of tools">
+    <a
+      mat-list-item
+      routerLink="{item.routerLink}"
+      routerLinkActive="lits-item-active"
+    >
+      <mat-icon>{{item.icon}}</mat-icon>
+      {{item.name}}
+    </a>
+  </div>
+</mat-nav-list>
