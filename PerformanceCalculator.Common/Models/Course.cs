@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using PerformanceCalculator.Common.Constants;
 
 namespace PerformanceCalculator.Common.Models
@@ -12,9 +13,11 @@ namespace PerformanceCalculator.Common.Models
         public Year Year { get; set; }
 
         public SemesterEnum Semester { get; set; }
+        [JsonIgnore]
         public Student Student { get; set; }
         public ICollection<Exam> Exams { get; set; }
 
+        [JsonIgnore]
         public Teacher Teacher { get; set; }
     }
 }

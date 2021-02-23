@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PerformanceCalculator.Business.Services;
+using PerformanceCalculator.Common.Dtos;
 using PerformanceCalculator.Common.Models;
 
 namespace PerformanceCalculator.API.Controllers
@@ -13,12 +13,12 @@ namespace PerformanceCalculator.API.Controllers
     [Route("[controller]")]
     public class CourseController : ControllerBase
     {
-        private readonly ILogger<CourseController> _logger;
+        private readonly IMapper _mapper;
         private readonly IDbService<Course> _service;
 
-        public CourseController(ILogger<CourseController> logger, IDbService<Course> service)
+        public CourseController(IMapper mapper, IDbService<Course> service)
         {
-            _logger = logger;
+            _mapper = mapper;
             _service = service;
         }
 
@@ -26,7 +26,8 @@ namespace PerformanceCalculator.API.Controllers
         public async Task<ActionResult<IReadOnlyList<Course>>> GetAsync()
         {
             var data = await _service.GetAsync();
-            return Ok(data);
+            var mappedData = _mapper.Map<IReadOnlyList<Course>, IReadOnlyList<CourseDto>>(data);
+            return Ok(mappedData);
         }
 
         [HttpPost]

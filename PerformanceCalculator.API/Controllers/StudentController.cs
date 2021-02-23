@@ -6,6 +6,8 @@ using PerformanceCalculator.Common.Models;
 
 namespace PerformanceCalculator.API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class StudentController : ControllerBase
     {
         private readonly IDbService<Student> _service;
