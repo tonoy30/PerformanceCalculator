@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PerformanceCalculator.API.Extensions;
 
 namespace PerformanceCalculator.API
 {
@@ -21,7 +22,7 @@ namespace PerformanceCalculator.API
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -31,6 +32,8 @@ namespace PerformanceCalculator.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "PerformanceCalculator.API", Version = "v1"});
             });
+            services.AddDbContexts(Configuration);
+            services.AddServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
