@@ -1,0 +1,12 @@
+table {
+  width: 100%;
+}
+.result {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+
+  &__details {
+    text-align: center;
+  }
+}

@@ -1,6 +1,6 @@
 using AutoMapper;
-using PerformanceCalculator.API.Extensions;
 using PerformanceCalculator.Common.Dtos;
+using PerformanceCalculator.Common.Extensions;
 using PerformanceCalculator.Common.Models;
 
 namespace PerformanceCalculator.Common.Profilers

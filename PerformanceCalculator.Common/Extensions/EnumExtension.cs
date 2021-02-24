@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
-namespace PerformanceCalculator.API.Extensions
+namespace PerformanceCalculator.Common.Extensions
 {
     public static class EnumExtension
     {
@@ -12,12 +12,12 @@ namespace PerformanceCalculator.API.Extensions
             if (!typeof(T).IsEnum)
                 throw new ArgumentException("Argument must be of type Enum");
 
-            DisplayAttribute displayAttribute = enumValue.GetType()
+            var displayAttribute = enumValue.GetType()
                 .GetMember(enumValue.ToString())
                 .First()
                 .GetCustomAttribute<DisplayAttribute>();
 
-            string displayName = displayAttribute?.GetName();
+            var displayName = displayAttribute?.GetName();
 
             return displayName ?? enumValue.ToString();
         }

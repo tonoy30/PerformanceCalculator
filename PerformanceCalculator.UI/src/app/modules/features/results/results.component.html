@@ -1,0 +1,34 @@
+<div class="result">
+  <div class="result__details">
+    <h1>Final result of 4<sup>th</sup> year 2<sup>nd</sup> semester</h1>
+    <p>Dept. of Software Engineering</p>
+    <p>Session: 2016-17</p>
+  </div>
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="Reg. No">
+      <th mat-header-cell *matHeaderCellDef>Reg. No</th>
+      <td mat-cell *matCellDef="let element">{{element.regNo}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+
+    <ng-container *ngFor="let item of courseColumn" matColumnDef="{{item}}">
+      <th mat-header-cell *matHeaderCellDef>{{item}}</th>
+      <td mat-cell *matCellDef="let element">{{getGPA(element, item)}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>

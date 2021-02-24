@@ -12,7 +12,6 @@ namespace PerformanceCalculator.Common.Models
         [Required]
         [MaxLength(100)]
         public string LastName { get; set; }
-        
         [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
@@ -21,6 +20,9 @@ namespace PerformanceCalculator.Common.Models
         public string RegistrationNo { get; set; }
         [DataType(DataType.PhoneNumber)]
         public string PhoneNo { get; set; }
+        [Required]
+        [MinLength(7), MaxLength(7)]
+        public string Session { get; set; }
         public ICollection<Course> Courses { get; set; }
     }
 }

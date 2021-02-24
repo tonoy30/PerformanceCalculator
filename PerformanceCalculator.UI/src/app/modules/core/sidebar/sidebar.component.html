@@ -11,7 +11,7 @@
   <div *ngFor="let item of pages">
     <a
       mat-list-item
-      routerLink="{item.routerLink}"
+      routerLink="{{item.routerLink}}"
       routerLinkActive="lits-item-active"
     >
       {{item.name}}
@@ -22,7 +22,7 @@
   <div *ngFor="let item of tools">
     <a
       mat-list-item
-      routerLink="{item.routerLink}"
+      routerLink="{{item.routerLink}}"
       routerLinkActive="lits-item-active"
     >
       <mat-icon>{{item.icon}}</mat-icon>

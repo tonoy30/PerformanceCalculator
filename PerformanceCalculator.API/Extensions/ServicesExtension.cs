@@ -13,9 +13,23 @@ namespace PerformanceCalculator.API.Extensions
             services.AddAutoMapper(typeof(CourseProfiler));
             return services;
         }
-    }
 
-    public class MappingProfiles : Profile
-    {
+        public static IServiceCollection AddCrossOrigin(this IServiceCollection services)
+        {
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.WithOrigins(
+                            "https://localhost:4200",
+                            "http://localhost:4200",
+                            "https://localhost:5001",
+                            "http://localhost:5000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+            return services;
+        }
     }
 }
