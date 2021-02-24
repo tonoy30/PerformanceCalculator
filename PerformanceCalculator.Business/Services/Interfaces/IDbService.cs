@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using PerformanceCalculator.Business.Specifications;
 using PerformanceCalculator.Common.Models;
 
-namespace PerformanceCalculator.Business.Services
+namespace PerformanceCalculator.Business.Services.Interfaces
 {
     public interface IDbService<T> where T : BaseModel
     {

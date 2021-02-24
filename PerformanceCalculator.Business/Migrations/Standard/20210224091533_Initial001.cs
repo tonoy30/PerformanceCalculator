@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PerformanceCalculator.Business.Migrations
+namespace PerformanceCalculator.Business.Migrations.Standard
 {
     public partial class Initial001 : Migration
     {
@@ -31,6 +31,7 @@ namespace PerformanceCalculator.Business.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegistrationNo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Session = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

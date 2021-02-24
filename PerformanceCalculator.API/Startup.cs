@@ -28,6 +28,8 @@ namespace PerformanceCalculator.API
             services.AddDbContexts(Configuration);
             services.AddServices();
             services.AddCrossOrigin();
+            services.AddIdentityDbContexts(Configuration);
+            services.AddIdentityService(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +48,8 @@ namespace PerformanceCalculator.API
             
             app.UseCors("CorsPolicy");
             
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
