@@ -52,7 +52,8 @@ namespace PerformanceCalculator.API.Controllers
                 Email = user.Email,
                 DisplayName = user.DisplayName,
                 Token = _tokenService.CreateToken(user),
-                Avatar = _avatarService.Generate(user.DisplayName)
+                Avatar = _avatarService.Generate(user.DisplayName),
+                Role = 0
             };
             return Ok(data);
         }
@@ -80,7 +81,8 @@ namespace PerformanceCalculator.API.Controllers
                 Email = user.Email,
                 Token = _tokenService.CreateToken(user),
                 DisplayName = user.DisplayName,
-                Avatar = _avatarService.Generate(user.DisplayName)
+                Avatar = _avatarService.Generate(user.DisplayName),
+                Role = 0
             };
             return Ok(data);
         }

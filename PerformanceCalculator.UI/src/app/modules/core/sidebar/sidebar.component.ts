@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,11 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  user = {
-    name: 'Mehedi Chomo',
-    email: 'mehedi.chomo@gmail.com',
-    avatar: '../../../assets/images/nose.jpg',
-  };
+  user: User;
   pages = [
     { routerLink: '', name: 'Results' },
     { routerLink: '/students', name: 'Students' },
@@ -23,7 +21,9 @@ export class SidebarComponent implements OnInit {
     { routerLink: 'contacts', name: 'Contacts', icon: 'import_contacts' },
     { routerLink: 'settings', name: 'Settings', icon: 'settings' },
   ];
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.user = this.authService.currentUserValue;
+  }
 }

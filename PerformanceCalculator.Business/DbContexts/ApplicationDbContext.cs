@@ -84,6 +84,14 @@ namespace PerformanceCalculator.Business.DbContexts
                             trackable.CreatedAt = utcNow;
                             trackable.UpdatedAt = utcNow;
                             break;
+                        case EntityState.Detached:
+                            break;
+                        case EntityState.Unchanged:
+                            break;
+                        case EntityState.Deleted:
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
                 }
             }
