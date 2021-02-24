@@ -41,7 +41,7 @@ namespace PerformanceCalculator.Business.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(1),
+                Expires = DateTime.Now.AddDays(double.Parse(_configuration["Token:Expires"])),
                 SigningCredentials = credentials,
                 Issuer = _configuration["Token:Issuer"]
             };
