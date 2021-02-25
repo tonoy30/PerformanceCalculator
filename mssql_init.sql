@@ -1,0 +1,4 @@
+CREATE DATABASE performance_calculator;
+CREATE DATABASE performance_calculator_identity;
+GO
+USE performance_calculator;
