@@ -27,7 +27,6 @@ namespace PerformanceCalculator.Business.Services
         public async Task<T> GetByIdAsync(Guid id)
         {
             return await _context.Set<T>().FindAsync(id);
-            ;
         }
 
         public async Task CreateAsync(T model)
@@ -38,7 +37,8 @@ namespace PerformanceCalculator.Business.Services
 
         public async Task UpdateAsync(T model)
         {
-            _context.Attach(model).State = EntityState.Modified;
+            var entity = await _context.Set<T>().FindAsync(model.Id);
+            _context.Entry(entity).CurrentValues.SetValues(model);
             await _context.SaveChangesAsync();
         }
 

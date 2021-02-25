@@ -9,6 +9,8 @@ import { ExamsComponent } from './exams/exams.component';
 import { MarksComponent } from './marks/marks.component';
 import { CoursesComponent } from './courses/courses.component';
 import { MaterialModule } from 'src/app/material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { StudentsService } from './services/students.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,12 @@ import { MaterialModule } from 'src/app/material.module';
     MarksComponent,
     CoursesComponent,
   ],
-  imports: [CommonModule, FeaturesRoutingModule, MaterialModule],
+  imports: [
+    CommonModule,
+    FeaturesRoutingModule,
+    MaterialModule,
+    HttpClientModule,
+  ],
+  providers: [StudentsService],
 })
 export class FeaturesModule {}

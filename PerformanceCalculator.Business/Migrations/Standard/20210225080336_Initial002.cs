@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PerformanceCalculator.Business.Migrations.Standard
 {
-    public partial class Initial001 : Migration
+    public partial class Initial002 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

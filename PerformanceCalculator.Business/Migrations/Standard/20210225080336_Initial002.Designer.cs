@@ -10,8 +10,8 @@ using PerformanceCalculator.Business.DbContexts;
 namespace PerformanceCalculator.Business.Migrations.Standard
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210224091533_Initial001")]
-    partial class Initial001
+    [Migration("20210225080336_Initial002")]
+    partial class Initial002
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
