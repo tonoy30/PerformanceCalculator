@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using PerformanceCalculator.Business.Services;
+using Microsoft.EntityFrameworkCore;
+using PerformanceCalculator.API.Specifications;
 using PerformanceCalculator.Business.Services.Interfaces;
 using PerformanceCalculator.Common.Dtos;
 using PerformanceCalculator.Common.Models;
@@ -31,11 +32,64 @@ namespace PerformanceCalculator.API.Controllers
             return Ok(mappedData);
         }
 
+        [HttpGet("{id}", Name = "GetCourseById")]
+        public async Task<ActionResult<Course>> GetByIdAsync(Guid id)
+        {
+            var spec = new CourseWithExamSpecification(id);
+            var data = await _service.GetModelWithSpec(spec);
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            var mappedData = _mapper.Map<Course, CourseDto>(data);
+            return Ok(mappedData);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Course>> PostAsync(Course course)
         {
             await _service.CreateAsync(course);
-            return Ok(course);
+            return CreatedAtRoute("GetCourseById", new { id = course.Id }, course);
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Student>> UpdateCourseAsync(Guid id, Course course)
+        {
+
+            var spec = new CourseWithExamSpecification(id);
+            var data = await _service.GetModelWithSpec(spec);
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                data = course;
+                await _service.UpdateAsync(data);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                var isExist = await _service.IsExists(data.Id);
+                if (!isExist)
+                {
+                    return NotFound();
+                }
+            }
+
+            return Ok(data);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCourseAsync(Guid id)
+        {
+            var course = await _service.GetByIdAsync(id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            await _service.DeleteAsync(course);
+            return NoContent();
         }
     }
 }

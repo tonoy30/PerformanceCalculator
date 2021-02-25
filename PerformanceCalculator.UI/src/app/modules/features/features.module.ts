@@ -11,6 +11,7 @@ import { CoursesComponent } from './courses/courses.component';
 import { MaterialModule } from 'src/app/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { StudentsService } from './services/students.service';
+import { CourseDetailsComponent } from './courses/course-details/course-details.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { StudentsService } from './services/students.service';
     ExamsComponent,
     MarksComponent,
     CoursesComponent,
+    CourseDetailsComponent,
   ],
   imports: [
     CommonModule,

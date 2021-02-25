@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CourseDetailsComponent } from './courses/course-details/course-details.component';
 import { CoursesComponent } from './courses/courses.component';
 import { ExamsComponent } from './exams/exams.component';
 import { MarksComponent } from './marks/marks.component';
@@ -13,7 +14,16 @@ const routes: Routes = [
   { path: 'exams', component: ExamsComponent },
   { path: 'teachers', component: TeachersComponent },
   { path: 'marks', component: MarksComponent },
-  { path: 'courses', component: CoursesComponent },
+  {
+    path: 'courses',
+    component: CoursesComponent,
+    children: [
+      {
+        path: ':id',
+        component: CourseDetailsComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
