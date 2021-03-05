@@ -33,7 +33,7 @@ namespace PerformanceCalculator.API.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<UserDto>> LoginAsync([FromBody] AuthDto loginDto)
+        public async Task<ActionResult<UserDto>> LoginAsync([FromBody] LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
             if (user == null)
@@ -53,7 +53,7 @@ namespace PerformanceCalculator.API.Controllers
                 DisplayName = user.DisplayName,
                 Token = _tokenService.CreateToken(user),
                 Avatar = _avatarService.Generate(user.DisplayName),
-                Role = 0
+                Role = user.Role
             };
             return Ok(data);
         }
@@ -62,13 +62,15 @@ namespace PerformanceCalculator.API.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<UserDto>> RegisterAsync([FromBody] AuthDto register)
+        public async Task<ActionResult<UserDto>> RegisterAsync([FromBody] RegisterDto register)
         {
             var user = new AppUser
             {
                 DisplayName = register.Email.Split('@')[0],
                 Email = register.Email,
-                UserName = register.Email
+                UserName = register.Email,
+                Role = register.Role
+
             };
             var result = await _userManager.CreateAsync(user, register.Password);
             if (!result.Succeeded)
@@ -82,7 +84,7 @@ namespace PerformanceCalculator.API.Controllers
                 Token = _tokenService.CreateToken(user),
                 DisplayName = user.DisplayName,
                 Avatar = _avatarService.Generate(user.DisplayName),
-                Role = 0
+                Role = user.Role
             };
             return Ok(data);
         }

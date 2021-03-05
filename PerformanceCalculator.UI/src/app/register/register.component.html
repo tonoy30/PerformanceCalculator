@@ -1,1 +1,63 @@
-<p>register works!</p>
+<mat-card>
+	<mat-card-content>
+		<mat-grid-list cols="1" rowHeight="400px">
+			<mat-grid-tile>
+				<form
+					class="container"
+					[formGroup]="registerForm"
+					(ngSubmit)="onSubmit()"
+				>
+					<h2>Register</h2>
+					<mat-form-field appearance="fill" class="full-width-input">
+						<mat-label>Email address</mat-label>
+						<input
+							matInput
+							placeholder="Ex. pat@example.com"
+							formControlName="email"
+							required
+						/>
+					</mat-form-field>
+					<br />
+					<mat-form-field appearance="fill" class="width-100">
+						<mat-label>Enter password</mat-label>
+						<input
+							matInput
+							[type]="hide ? 'password' : 'text'"
+							formControlName="password"
+						/>
+						<button
+							mat-icon-button
+							matSuffix
+							(click)="hide = !hide"
+							[attr.aria-label]="'Hide password'"
+							[attr.aria-pressed]="hide"
+						>
+							<mat-icon
+								>{{hide ? 'visibility_off' :
+								'visibility'}}</mat-icon
+							>
+						</button>
+					</mat-form-field>
+					<br />
+					<label id="role-radio-group-label">Role: </label>
+					<br /><br />
+					<mat-radio-group
+						formControlName="role"
+						aria-label="Select an option"
+					>
+						<mat-radio-button
+							class="role-radio-button"
+							*ngFor="let role of roles"
+							value="{{role.value}}"
+							>{{role.type}}</mat-radio-button
+						>
+					</mat-radio-group>
+					<br /><br />
+					<button class="width-100" mat-raised-button color="primary">
+						Register
+					</button>
+				</form>
+			</mat-grid-tile>
+		</mat-grid-list>
+	</mat-card-content>
+</mat-card>
