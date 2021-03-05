@@ -7,6 +7,7 @@ namespace PerformanceCalculator.Common.Profilers
 {
     public class CourseProfiler : Profile
     {
+        // TODO: dto at Exams 
         public CourseProfiler()
         {
             CreateMap<Course, CourseDto>()
