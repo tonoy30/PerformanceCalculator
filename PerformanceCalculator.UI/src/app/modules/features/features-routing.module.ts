@@ -16,8 +16,11 @@ const routes: Routes = [
   { path: 'marks', component: MarksComponent },
   {
     path: 'courses',
-    component: CoursesComponent,
     children: [
+      {
+        path: '',
+        component: CoursesComponent,
+      },
       {
         path: ':id',
         component: CourseDetailsComponent,
