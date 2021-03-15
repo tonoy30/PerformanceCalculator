@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using PerformanceCalculator.Common.Constants;
 
 namespace PerformanceCalculator.Common.Models
@@ -18,10 +19,7 @@ namespace PerformanceCalculator.Common.Models
         [DataType(DataType.PhoneNumber)]
         public string PhoneNo { get; set; }
 
-        [Required] 
-        public DesignationEnum Designation { get; set; }
-
-        public Guid CourseId { get; set; }
-        public Course Course { get; set; }
+        [Required] public DesignationEnum Designation { get; set; }
+        public ICollection<Course> Courses { get; set; }
     }
 }

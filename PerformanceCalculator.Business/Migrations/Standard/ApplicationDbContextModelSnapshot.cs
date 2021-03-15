@@ -68,16 +68,31 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CourseNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<float>("Credit")
                         .HasColumnType("real");
 
+                    b.Property<string>("DegreeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeptName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Semester")
                         .HasColumnType("int");
 
+                    b.Property<string>("Session")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TeacherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
@@ -86,14 +101,14 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("YearId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StudentId");
 
-                    b.HasIndex("YearId");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
                 });
@@ -118,6 +133,9 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                         .HasColumnType("decimal(18,2)")
                         .HasDefaultValue(0m);
 
+                    b.Property<Guid?>("ResultId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -131,7 +149,41 @@ namespace PerformanceCalculator.Business.Migrations.Standard
 
                     b.HasIndex("CourseId");
 
+                    b.HasIndex("ResultId");
+
                     b.ToTable("Exams");
+                });
+
+            modelBuilder.Entity("PerformanceCalculator.Common.Models.Result", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Results");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Common.Models.Student", b =>
@@ -184,9 +236,6 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -214,30 +263,7 @@ namespace PerformanceCalculator.Business.Migrations.Standard
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId")
-                        .IsUnique();
-
                     b.ToTable("Teachers");
-                });
-
-            modelBuilder.Entity("PerformanceCalculator.Common.Models.Year", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Years");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Common.Models.Course", b =>
@@ -247,14 +273,13 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("PerformanceCalculator.Common.Models.Year", "Year")
+                    b.HasOne("PerformanceCalculator.Common.Models.Teacher", "Teacher")
                         .WithMany("Courses")
-                        .HasForeignKey("YearId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Student");
 
-                    b.Navigation("Year");
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Common.Models.Exam", b =>
@@ -264,25 +289,44 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("PerformanceCalculator.Common.Models.Result", "Result")
+                        .WithMany("Exams")
+                        .HasForeignKey("ResultId");
+
                     b.Navigation("Course");
+
+                    b.Navigation("Result");
                 });
 
-            modelBuilder.Entity("PerformanceCalculator.Common.Models.Teacher", b =>
+            modelBuilder.Entity("PerformanceCalculator.Common.Models.Result", b =>
                 {
                     b.HasOne("PerformanceCalculator.Common.Models.Course", "Course")
-                        .WithOne("Teacher")
-                        .HasForeignKey("PerformanceCalculator.Common.Models.Teacher", "CourseId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("PerformanceCalculator.Common.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId");
+
+                    b.HasOne("PerformanceCalculator.Common.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Course");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Common.Models.Course", b =>
                 {
                     b.Navigation("Exams");
+                });
 
-                    b.Navigation("Teacher");
+            modelBuilder.Entity("PerformanceCalculator.Common.Models.Result", b =>
+                {
+                    b.Navigation("Exams");
                 });
 
             modelBuilder.Entity("PerformanceCalculator.Common.Models.Student", b =>
@@ -290,7 +334,7 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("PerformanceCalculator.Common.Models.Year", b =>
+            modelBuilder.Entity("PerformanceCalculator.Common.Models.Teacher", b =>
                 {
                     b.Navigation("Courses");
                 });

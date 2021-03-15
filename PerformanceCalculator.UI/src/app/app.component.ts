@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { PrimeNGConfig } from "primeng/api";
 import { User } from "./models/user";
 import { AuthService } from "./services/auth.service";
 
@@ -10,9 +11,13 @@ import { AuthService } from "./services/auth.service";
 export class AppComponent implements OnInit {
 	user: User;
 	sideBarOpen = false;
-	constructor(private authService: AuthService) {}
+	constructor(
+		private authService: AuthService,
+		private primengConfig: PrimeNGConfig
+	) {}
 
 	ngOnInit(): void {
+		this.primengConfig.ripple = true;
 		this.authService.currentUser.subscribe(
 			(user: User) => (this.user = user)
 		);

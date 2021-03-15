@@ -12,8 +12,8 @@ namespace PerformanceCalculator.Common.Profilers
         {
             CreateMap<Course, CourseDto>()
                 .ForMember(cd => cd.Semester,
-                    o => o.MapFrom(c => c.Semester.GetDisplayName()))
-                .ForMember(cd => cd.Year, o => o.MapFrom(c => c.Year.Title));
+                    o => o.MapFrom(c => c.Semester.GetDisplayName()));
+                
         }
     }
 }

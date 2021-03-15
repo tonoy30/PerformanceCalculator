@@ -1,1 +1,243 @@
-<p>courses works!</p>
+<p-toast></p-toast>
+
+<div class="card">
+	<p-toolbar styleClass="p-mb-4">
+		<ng-template pTemplate="left">
+			<button
+				pButton
+				pRipple
+				label="New"
+				icon="pi pi-plus"
+				class="p-button-success p-mr-2"
+				(click)="create()"
+			></button>
+		</ng-template>
+
+		<ng-template pTemplate="right">
+			<p-fileUpload
+				mode="basic"
+				accept="image/*"
+				[maxFileSize]="1000000"
+				label="Import"
+				chooseLabel="Import"
+				class="p-mr-2 p-d-inline-block"
+			></p-fileUpload>
+		</ng-template>
+	</p-toolbar>
+	<p-table
+		#dt
+		[value]="courses"
+		[rows]="rows"
+		[paginator]="true"
+		[globalFilterFields]="['title','code','year','semester']"
+		[rowHover]="true"
+		dataKey="id"
+		currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+		[showCurrentPageReport]="true"
+	>
+		<ng-template pTemplate="caption">
+			<div class="p-d-flex p-ai-center p-jc-between">
+				<h1 class="p-m-0">Manage Courses</h1>
+				<span class="p-input-icon-left">
+					<i class="pi pi-search"></i>
+					<input
+						pInputText
+						type="text"
+						(input)="onSearch(dt, $event)"
+						placeholder="Search..."
+					/>
+				</span>
+			</div>
+		</ng-template>
+		<ng-template pTemplate="header">
+			<tr>
+				<!-- <th style="width: 3rem;">
+					<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+				</th> -->
+				<th pSortableColumn="title">
+					Title <p-sortIcon field="title"></p-sortIcon>
+				</th>
+				<th pSortableColumn="code">
+					Code <p-sortIcon field="code"></p-sortIcon>
+				</th>
+				<th pSortableColumn="credit">
+					Credit <p-sortIcon field="credit"></p-sortIcon>
+				</th>
+				<th pSortableColumn="year">
+					Year <p-sortIcon field="year"></p-sortIcon>
+				</th>
+				<th pSortableColumn="semester">
+					Semester <p-sortIcon field="semester"></p-sortIcon>
+				</th>
+				<th></th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-course>
+			<tr>
+				<!-- <td>
+					<p-tableCheckbox [value]="course"></p-tableCheckbox>
+				</td> -->
+				<td>{{course.title}}</td>
+				<td>{{course.code}}</td>
+				<td>{{course.credit}}</td>
+				<td>{{course.year}}</td>
+				<td>{{course.semester}}</td>
+				<td>
+					<button
+						pButton
+						pRipple
+						icon="pi pi-pencil"
+						class="p-button-rounded p-button-success p-mr-2"
+						(click)="editCourse(course.id, course)"
+					></button>
+					<button
+						pButton
+						pRipple
+						icon="pi pi-trash"
+						class="p-button-rounded p-button-warning"
+						(click)="deleteCourse(course)"
+					></button>
+				</td>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="summary">
+			<div class="p-d-flex p-ai-center p-jc-between">
+				In total there are {{courses ? courses.length : 0 }} courses.
+			</div>
+		</ng-template>
+	</p-table>
+
+	<p-dialog
+		[(visible)]="courseDialog"
+		[style]="{width: '850px'}"
+		header="Product Details"
+		[modal]="true"
+		styleClass="p-fluid"
+	>
+		<ng-template pTemplate="content">
+			<div class="card">
+				<div class="p-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-6">
+						<label for="title">Title</label>
+						<input
+							id="title"
+							type="text"
+							pInputText
+							[(ngModel)]="course.title"
+							required
+							autofocus
+						/>
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<label for="code">Code</label>
+						<input
+							id="code"
+							type="text"
+							pInputText
+							[(ngModel)]="course.code"
+							required
+							autofocus
+						/>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<label for="credit">Credit</label>
+						<input
+							id="credit"
+							type="number"
+							min="1"
+							max="4"
+							pInputText
+							[(ngModel)]="course.credit"
+							required
+							autofocus
+						/>
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<label for="year">Year</label>
+						<input
+							id="year"
+							type="text"
+							pInputText
+							[(ngModel)]="course.year"
+							required
+							autofocus
+						/>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<label for="session">Session</label>
+						<p-dropdown
+							inputId="state"
+							placeholder="Select"
+							optionLabel="name"
+							[(ngModel)]="course.session"
+						></p-dropdown>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<label for="degreeName">Degree Name</label>
+						<input
+							id="degreeName"
+							type="text"
+							pInputText
+							[(ngModel)]="course.degreeName"
+							required
+							autofocus
+						/>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<label for="courseNumber">Course Number</label>
+						<input
+							id="courseNumber"
+							type="text"
+							pInputText
+							[(ngModel)]="course.courseNumber"
+							required
+							autofocus
+						/>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<label for="deptName">Dept. Name</label>
+						<input
+							id="deptName"
+							type="text"
+							pInputText
+							[(ngModel)]="course.deptName"
+							required
+							autofocus
+						/>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<label for="semester">Semester</label>
+						<input
+							id="semester"
+							type="text"
+							pInputText
+							[(ngModel)]="course.semester"
+							required
+							autofocus
+						/>
+					</div>
+				</div>
+			</div>
+		</ng-template>
+
+		<ng-template pTemplate="footer">
+			<button
+				pButton
+				pRipple
+				label="Cancel"
+				icon="pi pi-times"
+				class="p-button-text"
+				(click)="hideDialog()"
+			></button>
+			<button
+				pButton
+				pRipple
+				label="Save"
+				icon="pi pi-check"
+				class="p-button-text"
+				(click)="saveCourses()"
+			></button>
+		</ng-template>
+	</p-dialog>
+</div>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

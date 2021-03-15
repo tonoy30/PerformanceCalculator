@@ -10,7 +10,11 @@ namespace PerformanceCalculator.Common.Models
         public string Title { get; set; }
         public string Code { get; set; }
         public float Credit { get; set; }
-        public Year Year { get; set; }
+        public string Year { get; set; }
+        public string Session { get; set; }
+        public string DegreeName { get; set; }
+        public string CourseNumber { get; set; }
+        public string DeptName { get; set; }
 
         public SemesterEnum Semester { get; set; }
         [JsonIgnore]

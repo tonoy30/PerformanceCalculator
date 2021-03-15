@@ -7,7 +7,7 @@ namespace PerformanceCalculator.API.Specifications
     {
         public TeacherWithCourseSpecification()
         {
-            AddInclude(t => t.Course);
+            AddInclude(t => t.Courses);
         }
     }
 }

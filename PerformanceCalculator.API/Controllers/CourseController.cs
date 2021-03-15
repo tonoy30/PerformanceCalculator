@@ -25,11 +25,11 @@ namespace PerformanceCalculator.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Course>>> GetAsync()
+        public async Task<ActionResult<IReadOnlyList<CourseDto>>> GetAsync()
         {
             var data = await _service.GetAsync();
-            var mappedData = _mapper.Map<IReadOnlyList<Course>, IReadOnlyList<CourseDto>>(data);
-            return Ok(mappedData);
+           //  var mappedData = _mapper.Map<IReadOnlyList<Course>, IReadOnlyList<CourseDto>>(data);
+            return Ok(data);
         }
 
         [HttpGet("{id}", Name = "GetCourseById")]

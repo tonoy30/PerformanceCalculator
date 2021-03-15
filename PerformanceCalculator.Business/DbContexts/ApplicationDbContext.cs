@@ -17,7 +17,7 @@ namespace PerformanceCalculator.Business.DbContexts
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<Year> Years { get; set; }
+        public DbSet<Result> Results { get; set; }
         public DbSet<TeacherAudit> TeacherAudits { get; set; }
         public DbSet<CourseAudit> CourseAudits { get; set; }
 
@@ -26,7 +26,7 @@ namespace PerformanceCalculator.Business.DbContexts
             modelBuilder.Entity<Exam>()
                 .Property(e => e.ObtainedMark)
                 .HasDefaultValue(0.00);
-            
+
             modelBuilder.Entity<Exam>()
                 .HasOne(e => e.Course)
                 .WithMany(c => c.Exams)
@@ -37,16 +37,6 @@ namespace PerformanceCalculator.Business.DbContexts
                 .WithMany(s => s.Courses)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Course>()
-                .HasOne(c => c.Year)
-                .WithMany(y => y.Courses)
-                .OnDelete(DeleteBehavior.Cascade);
-            
-            modelBuilder.Entity<Course>()
-                .HasOne(c => c.Teacher)
-                .WithOne(t => t.Course)
-                .OnDelete(DeleteBehavior.NoAction);
-            
             base.OnModelCreating(modelBuilder);
         }
 
