@@ -1,12 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { CourseDetailsComponent } from "./courses/course-details/course-details.component";
-import { CoursesComponent } from "./courses/courses.component";
-import { ExamsComponent } from "./exams/exams.component";
-import { MarksComponent } from "./marks/marks.component";
-import { ResultsComponent } from "./results/results.component";
-import { StudentsComponent } from "./students/students.component";
-import { TeachersComponent } from "./teachers/teachers.component";
+import { CoursesComponent } from "./components/courses/courses.component";
+import { ExamsComponent } from "./components/exams/exams.component";
+import { MarksComponent } from "./components/marks/marks.component";
+import { ResultsComponent } from "./components/results/results.component";
+import { StudentsComponent } from "./components/students/students.component";
+import { TeachersComponent } from "./components/teachers/teachers.component";
 
 const routes: Routes = [
 	{ path: "", component: ResultsComponent },
@@ -20,10 +19,6 @@ const routes: Routes = [
 			{
 				path: "",
 				component: CoursesComponent,
-			},
-			{
-				path: "detail",
-				component: CourseDetailsComponent,
 			},
 		],
 	},

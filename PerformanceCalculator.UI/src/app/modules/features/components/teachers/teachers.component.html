@@ -16,7 +16,7 @@
 		<ng-template pTemplate="right">
 			<p-fileUpload
 				mode="basic"
-				accept="image/*"
+				accept=".csv"
 				[maxFileSize]="1000000"
 				label="Import"
 				chooseLabel="Import"
@@ -26,10 +26,10 @@
 	</p-toolbar>
 	<p-table
 		#dt
-		[value]="courses"
+		[value]="teachers"
 		[rows]="rows"
 		[paginator]="true"
-		[globalFilterFields]="['title','code','year','semester']"
+		[globalFilterFields]="['title','email']"
 		[rowHover]="true"
 		dataKey="id"
 		currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -37,7 +37,7 @@
 	>
 		<ng-template pTemplate="caption">
 			<div class="p-d-flex p-ai-center p-jc-between">
-				<h1 class="p-m-0">Manage Courses</h1>
+				<h1 class="p-m-0">Manage Teachers</h1>
 				<span class="p-input-icon-left">
 					<i class="pi pi-search"></i>
 					<input
@@ -51,64 +51,54 @@
 		</ng-template>
 		<ng-template pTemplate="header">
 			<tr>
-				<!-- <th style="width: 3rem;">
-					<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-				</th> -->
-				<th pSortableColumn="title">
-					Title <p-sortIcon field="title"></p-sortIcon>
+				<th>
+					Name
 				</th>
-				<th pSortableColumn="code">
-					Code <p-sortIcon field="code"></p-sortIcon>
+				<th>
+					Email
 				</th>
-				<th pSortableColumn="credit">
-					Credit <p-sortIcon field="credit"></p-sortIcon>
+				<th>
+					Phone No
 				</th>
-				<th pSortableColumn="year">
-					Year <p-sortIcon field="year"></p-sortIcon>
-				</th>
-				<th pSortableColumn="semester">
-					Semester <p-sortIcon field="semester"></p-sortIcon>
+				<th>
+					Designation
 				</th>
 				<th></th>
 			</tr>
 		</ng-template>
-		<ng-template pTemplate="body" let-course>
+		<ng-template pTemplate="body" let-teacher>
 			<tr>
-				<!-- <td>
-					<p-tableCheckbox [value]="course"></p-tableCheckbox>
-				</td> -->
-				<td>{{course.title}}</td>
-				<td>{{course.code}}</td>
-				<td>{{course.credit}}</td>
-				<td>{{course.year}}</td>
-				<td>{{course.semester}}</td>
+				<td>{{teacher.firstName}} {{teacher.lastName}}</td>
+				<td>{{teacher.email}}</td>
+				<td>{{teacher.phoneNo}}</td>
+				<td>{{teacher.designation}}</td>
 				<td>
 					<button
 						pButton
 						pRipple
 						icon="pi pi-pencil"
 						class="p-button-rounded p-button-success p-mr-2"
-						(click)="editCourse(course.id, course)"
+						(click)="editTeacher(teacher.id, teacher)"
 					></button>
 					<button
 						pButton
 						pRipple
 						icon="pi pi-trash"
 						class="p-button-rounded p-button-warning"
-						(click)="deleteCourse(course)"
+						(click)="deleteTeacher(teacher)"
 					></button>
 				</td>
 			</tr>
 		</ng-template>
 		<ng-template pTemplate="summary">
 			<div class="p-d-flex p-ai-center p-jc-between">
-				In total there are {{courses ? courses.length : 0 }} courses.
+				In total there are {{teachers ? teachers.length : 0 }} teachers.
 			</div>
 		</ng-template>
 	</p-table>
 
 	<p-dialog
-		[(visible)]="courseDialog"
+		[(visible)]="teacherDialog"
 		[style]="{width: '850px'}"
 		header="Product Details"
 		[modal]="true"
@@ -118,100 +108,56 @@
 			<div class="card">
 				<div class="p-fluid p-formgrid p-grid">
 					<div class="p-field p-col-12 p-md-6">
-						<label for="title">Title</label>
+						<label for="title">First Name</label>
 						<input
-							id="title"
+							id="firstName"
 							type="text"
 							pInputText
-							[(ngModel)]="course.title"
+							[(ngModel)]="teacher.firstName"
 							required
 							autofocus
 						/>
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<label for="code">Code</label>
+						<label for="title">Last Name</label>
 						<input
-							id="code"
+							id="lastName"
 							type="text"
 							pInputText
-							[(ngModel)]="course.code"
-							required
-							autofocus
-						/>
-					</div>
-					<div class="p-field p-col-12 p-md-3">
-						<label for="credit">Credit</label>
-						<input
-							id="credit"
-							type="number"
-							min="1"
-							max="4"
-							pInputText
-							[(ngModel)]="course.credit"
+							[(ngModel)]="teacher.lastName"
 							required
 							autofocus
 						/>
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<label for="year">Year</label>
+						<label for="email">Email</label>
 						<input
-							id="year"
-							type="text"
+							id="email"
+							type="email"
 							pInputText
-							[(ngModel)]="course.year"
+							[(ngModel)]="teacher.email"
 							required
 							autofocus
 						/>
 					</div>
 					<div class="p-field p-col-12 p-md-3">
-						<label for="session">Session</label>
-						<p-dropdown
-							inputId="state"
-							placeholder="Select"
-							optionLabel="name"
-							[(ngModel)]="course.session"
-						></p-dropdown>
-					</div>
-					<div class="p-field p-col-12 p-md-3">
-						<label for="degreeName">Degree Name</label>
+						<label for="phoneNo">Phone No</label>
 						<input
-							id="degreeName"
+							id="phoneNo"
 							type="text"
 							pInputText
-							[(ngModel)]="course.degreeName"
+							[(ngModel)]="teacher.phoneNo"
 							required
 							autofocus
 						/>
 					</div>
-					<div class="p-field p-col-12 p-md-3">
-						<label for="courseNumber">Course Number</label>
+					<div class="p-field p-col-12 p-md-6">
+						<label for="designation">Designation</label>
 						<input
-							id="courseNumber"
+							id="designation"
 							type="text"
 							pInputText
-							[(ngModel)]="course.courseNumber"
-							required
-							autofocus
-						/>
-					</div>
-					<div class="p-field p-col-12 p-md-3">
-						<label for="deptName">Dept. Name</label>
-						<input
-							id="deptName"
-							type="text"
-							pInputText
-							[(ngModel)]="course.deptName"
-							required
-							autofocus
-						/>
-					</div>
-					<div class="p-field p-col-12 p-md-3">
-						<label for="semester">Semester</label>
-						<input
-							id="semester"
-							type="text"
-							pInputText
-							[(ngModel)]="course.semester"
+							[(ngModel)]="teacher.designation"
 							required
 							autofocus
 						/>
@@ -226,7 +172,7 @@
 				pRipple
 				label="Cancel"
 				icon="pi pi-times"
-				class="p-button-text"
+				class="p-button-info"
 				(click)="hideDialog()"
 			></button>
 			<button
@@ -234,8 +180,8 @@
 				pRipple
 				label="Save"
 				icon="pi pi-check"
-				class="p-button-text"
-				(click)="saveCourses()"
+				class="p-button-danger"
+				(click)="saveTeacher()"
 			></button>
 		</ng-template>
 	</p-dialog>

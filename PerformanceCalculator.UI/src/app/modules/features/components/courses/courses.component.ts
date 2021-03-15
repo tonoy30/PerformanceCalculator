@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { Table } from "primeng/table";
 import { Courses } from "src/app/models/course";
-import { CoursesService } from "../services/courses.service";
+import { CoursesService } from "../../services/courses.service";
 
 @Component({
 	selector: "app-courses",
@@ -17,6 +17,7 @@ export class CoursesComponent implements OnInit {
 	submitted: boolean;
 	rows: number = 10;
 	courseForm: FormGroup;
+
 	constructor(
 		private service: CoursesService,
 		private messageService: MessageService,
@@ -29,17 +30,7 @@ export class CoursesComponent implements OnInit {
 		this.service.getCourses().subscribe((res) => (this.courses = res));
 	}
 	create() {
-		this.course = {
-			title: "string",
-			code: "string",
-			credit: 0,
-			year: "string",
-			session: "string",
-			degreeName: "string",
-			courseNumber: "string",
-			deptName: "string",
-			semester: 0,
-		};
+		this.course = {};
 		this.courseDialog = true;
 		this.submitted = false;
 	}
@@ -96,7 +87,7 @@ export class CoursesComponent implements OnInit {
 					this.messageService.add({
 						severity: "success",
 						summary: "Successful",
-						detail: "Product Deleted",
+						detail: "Course deleted successfully",
 						life: 3000,
 					});
 				});
@@ -114,7 +105,6 @@ export class CoursesComponent implements OnInit {
 				break;
 			}
 		}
-
 		return index;
 	}
 }
