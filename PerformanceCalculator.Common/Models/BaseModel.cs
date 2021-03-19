@@ -8,13 +8,10 @@ namespace PerformanceCalculator.Common.Models
         [Required]
         [Key] 
         public Guid Id { get; set; }
-
-        [Required]
         [DataType(DataType.DateTime)]
-        public DateTime CreatedAt { get; set; }
-        [Required]
+        public DateTime? CreatedAt { get; set; }
         [DataType(DataType.DateTime)]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         protected BaseModel()
         {

@@ -15,6 +15,7 @@ export class CoursesService {
 		return this.http.get<Courses>(`${environment.apiUrl}/course/${id}`);
 	}
 	createCourse(course: Courses) {
+		course.semester = +course.semester;
 		return this.http.post<Courses>(`${environment.apiUrl}/course`, course);
 	}
 	updateCourse(id: string, course: Courses) {

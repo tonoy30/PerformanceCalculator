@@ -21,7 +21,7 @@ namespace PerformanceCalculator.Business.SQLHelper.Procedures
                     BEGIN
                     Declare @Id uniqueidentifier, @Title nvarchar(250);
                     Select @Id = Id, @Title = Title from inserted
-                    insert into CourseAudits
+                    insert into CourseAudits (Id, AuditData)
                     values(@Id, 'Course ' + @Title + ' is added at ' + cast(Getdate() as nvarchar(20)))
                     END
                     ";

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using PerformanceCalculator.Business.SQLHelper;
 
 namespace PerformanceCalculator.Business.Migrations.Standard
 {
@@ -12,8 +13,8 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AuditData = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -32,8 +33,8 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                     RegistrationNo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Session = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -45,8 +46,8 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AuditData = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -64,8 +65,8 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Designation = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,8 +89,8 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                     Semester = table.Column<int>(type: "int", nullable: false),
                     StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -115,8 +116,8 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                     CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -152,8 +153,8 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                     ExamTypeEnum = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ResultId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -206,6 +207,7 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                 name: "IX_Results_TeacherId",
                 table: "Results",
                 column: "TeacherId");
+            migrationBuilder.RegisterSql();
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -230,6 +232,7 @@ namespace PerformanceCalculator.Business.Migrations.Standard
 
             migrationBuilder.DropTable(
                 name: "Teachers");
+            migrationBuilder.DropSql();
         }
     }
 }
