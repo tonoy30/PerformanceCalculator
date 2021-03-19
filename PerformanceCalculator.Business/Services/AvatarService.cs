@@ -15,7 +15,7 @@ namespace PerformanceCalculator.Business.Services
 
         public AvatarService()
         {
-            _bgColors = new List<string> {"B26126", "FFF7F2", "FFE8D8", "74ADB2", "D8FCFF"};
+            _bgColors = new List<string> { "e7d8f7ff", "cfb1eeff", "b88ae6ff", "a062ddff", "883bd5ff", "7014ccff", "631db0ff", "631db0ff", "482e77ff", "3a365bff" };
         }
 
         public string Generate(string displayName)
