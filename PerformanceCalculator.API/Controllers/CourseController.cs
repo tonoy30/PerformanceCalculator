@@ -14,7 +14,7 @@ using PerformanceCalculator.Common.Models;
 namespace PerformanceCalculator.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CourseController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -27,10 +27,9 @@ namespace PerformanceCalculator.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<CourseDto>>> GetAsync()
+        public async Task<ActionResult<IReadOnlyList<Course>>> GetAsync()
         {
             var data = await _service.GetAsync();
-           //  var mappedData = _mapper.Map<IReadOnlyList<Course>, IReadOnlyList<CourseDto>>(data);
             return Ok(data);
         }
 
@@ -52,12 +51,12 @@ namespace PerformanceCalculator.API.Controllers
         public async Task<ActionResult<Course>> PostAsync(Course course)
         {
             await _service.CreateAsync(course);
-            return CreatedAtRoute("GetCourseById", new { id = course.Id }, course);
+            return CreatedAtRoute("GetCourseById", new {id = course.Id}, course);
         }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<Student>> UpdateCourseAsync(Guid id, Course course)
         {
-
             var spec = new CourseWithExamSpecification(id);
             var data = await _service.GetModelWithSpec(spec);
             if (data == null)
@@ -81,6 +80,7 @@ namespace PerformanceCalculator.API.Controllers
 
             return Ok(data);
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourseAsync(Guid id)
         {

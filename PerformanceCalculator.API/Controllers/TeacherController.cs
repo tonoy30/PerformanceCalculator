@@ -8,7 +8,7 @@ using PerformanceCalculator.Common.Models;
 namespace PerformanceCalculator.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TeacherController : ControllerBase
     {
         private readonly IDbService<Teacher> _service;

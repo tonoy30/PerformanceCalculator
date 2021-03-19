@@ -4,14 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PerformanceCalculator.API.Specifications;
-using PerformanceCalculator.Business.Services;
 using PerformanceCalculator.Business.Services.Interfaces;
 using PerformanceCalculator.Common.Models;
 
 namespace PerformanceCalculator.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class StudentController : ControllerBase
     {
         private readonly IDbService<Student> _service;
