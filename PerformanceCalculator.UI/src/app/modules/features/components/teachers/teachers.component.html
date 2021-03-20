@@ -1,189 +1,110 @@
 <p-toast></p-toast>
 
 <div class="card">
-	<p-toolbar styleClass="p-mb-4">
-		<ng-template pTemplate="left">
-			<button
-				pButton
-				pRipple
-				label="New"
-				icon="pi pi-plus"
-				class="p-button-success p-mr-2"
-				(click)="create()"
-			></button>
-		</ng-template>
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+              (click)="openNew()"></button>
+    </ng-template>
+  </p-toolbar>
 
-		<ng-template pTemplate="right">
-			<p-fileUpload
-				mode="basic"
-				accept=".csv"
-				[maxFileSize]="1000000"
-				label="Import"
-				chooseLabel="Import"
-				class="p-mr-2 p-d-inline-block"
-			></p-fileUpload>
-		</ng-template>
-	</p-toolbar>
-	<p-table
-		#dt
-		[value]="teachers"
-		[rows]="rows"
-		[paginator]="true"
-		[globalFilterFields]="['title','email']"
-		[rowHover]="true"
-		dataKey="id"
-		currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-		[showCurrentPageReport]="true"
-	>
-		<ng-template pTemplate="caption">
-			<div class="p-d-flex p-ai-center p-jc-between">
-				<h1 class="p-m-0">Manage Teachers</h1>
-				<span class="p-input-icon-left">
-					<i class="pi pi-search"></i>
-					<input
-						pInputText
-						type="text"
-						(input)="onSearch(dt, $event)"
-						placeholder="Search..."
-					/>
-				</span>
-			</div>
-		</ng-template>
-		<ng-template pTemplate="header">
-			<tr>
-				<th>
-					Name
-				</th>
-				<th>
-					Email
-				</th>
-				<th>
-					Phone No
-				</th>
-				<th>
-					Designation
-				</th>
-				<th></th>
-			</tr>
-		</ng-template>
-		<ng-template pTemplate="body" let-teacher>
-			<tr>
-				<td>{{teacher.firstName}} {{teacher.lastName}}</td>
-				<td>{{teacher.email}}</td>
-				<td>{{teacher.phoneNo}}</td>
-				<td>{{teacher.designation}}</td>
-				<td>
-					<button
-						pButton
-						pRipple
-						icon="pi pi-pencil"
-						class="p-button-rounded p-button-success p-mr-2"
-						(click)="editTeacher(teacher.id, teacher)"
-					></button>
-					<button
-						pButton
-						pRipple
-						icon="pi pi-trash"
-						class="p-button-rounded p-button-warning"
-						(click)="deleteTeacher(teacher)"
-					></button>
-				</td>
-			</tr>
-		</ng-template>
-		<ng-template pTemplate="summary">
-			<div class="p-d-flex p-ai-center p-jc-between">
-				In total there are {{teachers ? teachers.length : 0 }} teachers.
-			</div>
-		</ng-template>
-	</p-table>
-
-	<p-dialog
-		[(visible)]="teacherDialog"
-		[style]="{width: '850px'}"
-		header="Product Details"
-		[modal]="true"
-		styleClass="p-fluid"
-	>
-		<ng-template pTemplate="content">
-			<div class="card">
-				<div class="p-fluid p-formgrid p-grid">
-					<div class="p-field p-col-12 p-md-6">
-						<label for="title">First Name</label>
-						<input
-							id="firstName"
-							type="text"
-							pInputText
-							[(ngModel)]="teacher.firstName"
-							required
-							autofocus
-						/>
-					</div>
-					<div class="p-field p-col-12 p-md-6">
-						<label for="title">Last Name</label>
-						<input
-							id="lastName"
-							type="text"
-							pInputText
-							[(ngModel)]="teacher.lastName"
-							required
-							autofocus
-						/>
-					</div>
-					<div class="p-field p-col-12 p-md-6">
-						<label for="email">Email</label>
-						<input
-							id="email"
-							type="email"
-							pInputText
-							[(ngModel)]="teacher.email"
-							required
-							autofocus
-						/>
-					</div>
-					<div class="p-field p-col-12 p-md-3">
-						<label for="phoneNo">Phone No</label>
-						<input
-							id="phoneNo"
-							type="text"
-							pInputText
-							[(ngModel)]="teacher.phoneNo"
-							required
-							autofocus
-						/>
-					</div>
-					<div class="p-field p-col-12 p-md-6">
-						<label for="designation">Designation</label>
-						<input
-							id="designation"
-							type="text"
-							pInputText
-							[(ngModel)]="teacher.designation"
-							required
-							autofocus
-						/>
-					</div>
-				</div>
-			</div>
-		</ng-template>
-
-		<ng-template pTemplate="footer">
-			<button
-				pButton
-				pRipple
-				label="Cancel"
-				icon="pi pi-times"
-				class="p-button-info"
-				(click)="hideDialog()"
-			></button>
-			<button
-				pButton
-				pRipple
-				label="Save"
-				icon="pi pi-check"
-				class="p-button-danger"
-				(click)="saveTeacher()"
-			></button>
-		</ng-template>
-	</p-dialog>
+  <p-table #dt [value]="teachers" [rows]="10" [paginator]="true"
+           [globalFilterFields]="['name','email','designation', 'contact']"
+           [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h5 class="p-m-0">Manage Students</h5>
+        <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onSearch(dt, $event)" placeholder="Search..."/>
+                </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="name">Name
+          <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="email">Email
+          <p-sortIcon field="email"></p-sortIcon>
+        </th>
+        <th pSortableColumn="contact">Contact
+          <p-sortIcon field="contact"></p-sortIcon>
+        </th>
+        <th pSortableColumn="designation">Designation
+          <p-sortIcon field="designation"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="product"></p-tableCheckbox>
+        </td>
+        <td>{{product.firstName}} {{product.lastName}}</td>
+        <td>{{product.email}}</td>
+        <td>{{product.phoneNo}}</td>
+        <td>{{product.designation}}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                  (click)="editProduct(product)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                  (click)="deleteProduct(product)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        In total there are {{teachers ? teachers.length : 0 }} products.
+      </div>
+    </ng-template>
+  </p-table>
 </div>
+
+<p-dialog [(visible)]="teacherDialog" [style]="{width: '450px'}" header="Teacher Details" [modal]="true"
+          styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="firstName">First Name</label>
+      <input type="text" pInputText id="firstName" [(ngModel)]="teacher.firstName" required autofocus/>
+      <small class="p-invalid" *ngIf="submitted && !teacher.firstName">Name is required.</small>
+    </div>
+    <div class="p-field">
+      <label for="lastName">Last Name</label>
+      <input type="text" pInputText id="lastName" [(ngModel)]="teacher.lastName" required autofocus/>
+      <small class="p-invalid" *ngIf="submitted && !teacher.lastName">Name is required.</small>
+    </div>
+    <div class="p-field">
+      <label for="email">email</label>
+      <input type="text" pInputText id="email" [(ngModel)]="teacher.email" required autofocus/>
+      <small class="p-invalid" *ngIf="submitted && !teacher.lastName">Name is required.</small>
+    </div>
+    <div class="p-field">
+      <div class="p-field">
+        <label for="contactNo">Contact No.</label>
+        <input type="text" pInputText id="contactNo" [(ngModel)]="teacher.phoneNo" required autofocus/>
+        <small class="p-invalid" *ngIf="submitted && !teacher.phoneNo">Name is required.</small>
+      </div>
+      <div class="p-field">
+        <div class="p-field">
+          <label for="designation">Designation</label>
+          <input type="number" pInputText id="designation" [(ngModel)]="teacher.designation" required autofocus/>
+          <small class="p-invalid" *ngIf="submitted && !teacher.designation">Name is required.</small>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+  </ng-template>
+</p-dialog>
+
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

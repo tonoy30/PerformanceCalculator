@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PerformanceCalculator.API.Specifications;
 using PerformanceCalculator.Business.DbContexts;
 using PerformanceCalculator.Business.Services.Interfaces;
@@ -57,6 +58,51 @@ namespace PerformanceCalculator.API.Controllers
             };
             await _service.UpdateAsync(teacher);
             return teacher;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTeacherAsync(Guid id)
+        {
+	        var teacher = await _service.GetByIdAsync(id);
+	        if (teacher == null)
+	        {
+		        return NotFound();
+	        }
+
+	        await _service.DeleteAsync(teacher);
+	        return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Student>> UpdateStudentAsync(Guid id, Teacher teacher)
+        {
+	        if (id != teacher.Id)
+	        {
+		        return BadRequest();
+	        }
+
+	        var spec = new TeacherWithCourseSpecification(id);
+	        var data = await _service.GetModelWithSpec(spec);
+	        if (data == null)
+	        {
+		        return NotFound();
+	        }
+
+	        try
+	        {
+		        data = teacher;
+		        await _service.UpdateAsync(data);
+	        }
+	        catch (DbUpdateConcurrencyException)
+	        {
+		        var isExist = await _service.IsExists(data.Id);
+		        if (!isExist)
+		        {
+			        return NotFound();
+		        }
+	        }
+
+	        return Ok(data);
         }
     }
 }
