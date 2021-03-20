@@ -10,7 +10,7 @@ using PerformanceCalculator.Business.DbContexts;
 namespace PerformanceCalculator.Business.Migrations.Standard
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210319102944_Initial001")]
+    [Migration("20210320123550_Initial001")]
     partial class Initial001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -277,7 +277,8 @@ namespace PerformanceCalculator.Business.Migrations.Standard
 
                     b.HasOne("PerformanceCalculator.Common.Models.Teacher", "Teacher")
                         .WithMany("Courses")
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Student");
 
@@ -293,7 +294,8 @@ namespace PerformanceCalculator.Business.Migrations.Standard
 
                     b.HasOne("PerformanceCalculator.Common.Models.Result", "Result")
                         .WithMany("Exams")
-                        .HasForeignKey("ResultId");
+                        .HasForeignKey("ResultId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Course");
 
@@ -304,15 +306,18 @@ namespace PerformanceCalculator.Business.Migrations.Standard
                 {
                     b.HasOne("PerformanceCalculator.Common.Models.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("PerformanceCalculator.Common.Models.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("PerformanceCalculator.Common.Models.Teacher", "Teacher")
                         .WithMany()
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Course");
 

@@ -1,181 +1,263 @@
-<!--<mat-form-field>-->
-<!--  <mat-label>Filter</mat-label>-->
-<!--  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />-->
-<!--</mat-form-field>-->
-
-<!--<table mat-table [dataSource]="dataSource" class="mat-elevation-z3">-->
-<!--  <ng-container matColumnDef="firstName">-->
-<!--    <th mat-header-cell *matHeaderCellDef>First Name</th>-->
-<!--    <td mat-cell *matCellDef="let element">{{element.firstName}}</td>-->
-<!--  </ng-container>-->
-<!--  <ng-container matColumnDef="lastName">-->
-<!--    <th mat-header-cell *matHeaderCellDef>Last Name</th>-->
-<!--    <td mat-cell *matCellDef="let element">{{element.lastName}}</td>-->
-<!--  </ng-container>-->
-
-<!--  <ng-container matColumnDef="email">-->
-<!--    <th mat-header-cell *matHeaderCellDef>Email</th>-->
-<!--    <td mat-cell *matCellDef="let element">{{element.email}}</td>-->
-<!--  </ng-container>-->
-
-<!--  <ng-container matColumnDef="registrationNo">-->
-<!--    <th mat-header-cell *matHeaderCellDef>Registration No</th>-->
-<!--    <td mat-cell *matCellDef="let element">{{element.registrationNo}}</td>-->
-<!--  </ng-container>-->
-
-<!--  <ng-container matColumnDef="phoneNo">-->
-<!--    <th mat-header-cell *matHeaderCellDef>Phone No</th>-->
-<!--    <td mat-cell *matCellDef="let element">{{element.phoneNo}}</td>-->
-<!--  </ng-container>-->
-
-<!--  <ng-container matColumnDef="session">-->
-<!--    <th mat-header-cell *matHeaderCellDef>Session</th>-->
-<!--    <td mat-cell *matCellDef="let element">{{element.session}}</td>-->
-<!--  </ng-container>-->
-<!--  <ng-container matColumnDef="Details">-->
-<!--    <th mat-header-cell *matHeaderCellDef>Details</th>-->
-<!--    <td mat-cell *matCellDef="let element">-->
-<!--      <button-->
-<!--        mat-raised-button-->
-<!--        color="primary"-->
-<!--        (click)="naviagteToDetails(element.id)"-->
-<!--      >-->
-<!--        Get Details-->
-<!--      </button>-->
-<!--    </td>-->
-<!--  </ng-container>-->
-<!--  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
-<!--  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
-
-<!--  <tr class="mat-row" *matNoDataRow>-->
-<!--    <td class="mat-cell" colspan="4">-->
-<!--      No data matching the filter "{{input.value}}"-->
-<!--    </td>-->
-<!--  </tr>-->
-<!--</table>-->
-
-
 <p-toast></p-toast>
 
 <div class="card">
-  <p-toolbar styleClass="p-mb-4">
-    <ng-template pTemplate="left">
-      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
-              (click)="openNew()"></button>
-    </ng-template>
-  </p-toolbar>
+	<p-toolbar styleClass="p-mb-4">
+		<ng-template pTemplate="left">
+			<button
+				pButton
+				pRipple
+				label="New"
+				icon="pi pi-plus"
+				class="p-button-success p-mr-2"
+				(click)="openNew()"
+			></button>
+		</ng-template>
+	</p-toolbar>
 
-  <p-table #dt [value]="students" [rows]="10" [paginator]="true"
-           [globalFilterFields]="['registrationNo','name','email','session', 'contact']"
-           [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
-           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-           [showCurrentPageReport]="true">
-    <ng-template pTemplate="caption">
-      <div class="p-d-flex p-ai-center p-jc-between">
-        <h5 class="p-m-0">Manage Students</h5>
-        <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="onSearch(dt, $event)" placeholder="Search..."/>
-                </span>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
-        <th pSortableColumn="registrationNo">Registration No.
-          <p-sortIcon field="registrationNo"></p-sortIcon>
-        </th>
-        <th pSortableColumn="name">Name
-          <p-sortIcon field="name"></p-sortIcon>
-        </th>
-        <th pSortableColumn="email">Email
-          <p-sortIcon field="email"></p-sortIcon>
-        </th>
-        <th pSortableColumn="contact">Contact
-          <p-sortIcon field="contact"></p-sortIcon>
-        </th>
-        <th pSortableColumn="session">Session
-          <p-sortIcon field="session"></p-sortIcon>
-        </th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-product>
-      <tr>
-        <td>
-          <p-tableCheckbox [value]="product"></p-tableCheckbox>
-        </td>
-        <td>{{product.registrationNo}}</td>
-        <td>{{product.firstName}} {{product.lastName}}</td>
-        <td>{{product.email}}</td>
-        <td>{{product.phoneNo}}</td>
-        <td>{{product.session}}</td>
-        <td>
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
-                  (click)="editProduct(product)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                  (click)="deleteProduct(product)"></button>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="summary">
-      <div class="p-d-flex p-ai-center p-jc-between">
-        In total there are {{students ? students.length : 0 }} products.
-      </div>
-    </ng-template>
-  </p-table>
+	<p-table
+		#dt
+		[value]="students"
+		[rows]="10"
+		[paginator]="true"
+		[globalFilterFields]="['registrationNo','name','email','session', 'contact']"
+		[(selection)]="selectedProducts"
+		[rowHover]="true"
+		dataKey="id"
+		currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+		[showCurrentPageReport]="true"
+	>
+		<ng-template pTemplate="caption">
+			<div class="p-d-flex p-ai-center p-jc-between">
+				<h1 class="p-m-0">Manage Students</h1>
+				<span class="p-input-icon-left">
+					<i class="pi pi-search"></i>
+					<input
+						pInputText
+						type="text"
+						(input)="onSearch(dt, $event)"
+						placeholder="Search..."
+					/>
+				</span>
+			</div>
+		</ng-template>
+		<ng-template pTemplate="header">
+			<tr>
+				<th pSortableColumn="registrationNo">
+					Registration No.
+					<p-sortIcon field="registrationNo"></p-sortIcon>
+				</th>
+				<th pSortableColumn="name">
+					Name
+					<p-sortIcon field="name"></p-sortIcon>
+				</th>
+				<th pSortableColumn="email">
+					Email
+					<p-sortIcon field="email"></p-sortIcon>
+				</th>
+				<th pSortableColumn="contact">
+					Contact
+					<p-sortIcon field="contact"></p-sortIcon>
+				</th>
+				<th pSortableColumn="session">
+					Session
+					<p-sortIcon field="session"></p-sortIcon>
+				</th>
+				<th></th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-product>
+			<tr>
+				<td>{{product.registrationNo}}</td>
+				<td>{{product.firstName}} {{product.lastName}}</td>
+				<td>{{product.email}}</td>
+				<td>{{product.phoneNo}}</td>
+				<td>{{product.session}}</td>
+				<td>
+					<button
+						pButton
+						pRipple
+						icon="pi pi-pencil"
+						class="p-button-rounded p-button-success p-mr-2"
+						(click)="editProduct(product)"
+					></button>
+					<button
+						pButton
+						pRipple
+						icon="pi pi-trash"
+						class="p-button-rounded p-button-warning p-mr-2"
+						(click)="deleteProduct(product)"
+					></button>
+					<button
+						pButton
+						pRipple
+						icon="pi pi-link"
+						class="p-button-rounded p-button-info"
+						(click)="addCourse(product)"
+					></button>
+				</td>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="summary">
+			<div class="p-d-flex p-ai-center p-jc-between">
+				In total there are {{students ? students.length : 0 }} products.
+			</div>
+		</ng-template>
+	</p-table>
 </div>
 
-<p-dialog [(visible)]="studentDialog" [style]="{width: '450px'}" header="Student Details" [modal]="true"
-          styleClass="p-fluid">
-  <ng-template pTemplate="content">
-    <div class="p-field">
-      <label for="regNo">{{student.id}}</label>
-    </div>
-    <div class="p-field">
-      <label for="regNo">Registration No.</label>
-      <input type="text" pInputText id="regNo" [(ngModel)]="student.registrationNo" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !student.registrationNo">Name is required.</small>
-    </div>
-    <div class="p-field">
-      <label for="firstName">First Name</label>
-      <input type="text" pInputText id="firstName" [(ngModel)]="student.firstName" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !student.firstName">Name is required.</small>
-    </div>
-    <div class="p-field">
-      <label for="lastName">Last Name</label>
-      <input type="text" pInputText id="lastName" [(ngModel)]="student.lastName" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !student.lastName">Name is required.</small>
-    </div>
-    <div class="p-field">
-      <label for="email">email</label>
-      <input type="text" pInputText id="email" [(ngModel)]="student.email" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !student.lastName">Name is required.</small>
-    </div>
-    <div class="p-field">
-      <div class="p-field">
-        <label for="contactNo">Contact No.</label>
-        <input type="text" pInputText id="contactNo" [(ngModel)]="student.phoneNo" required autofocus/>
-        <small class="p-invalid" *ngIf="submitted && !student.phoneNo">Name is required.</small>
-      </div>
-      <div class="p-field">
-        <div class="p-field">
-          <label for="session">Session</label>
-          <input type="text" pInputText id="session" [(ngModel)]="student.session" required autofocus/>
-          <small class="p-invalid" *ngIf="submitted && !student.session">Name is required.</small>
-        </div>
-        <div class="p-field">
-        </div>
-      </div>
-    </div>
-  </ng-template>
+<p-dialog
+	[(visible)]="studentDialog"
+	[style]="{width: '450px'}"
+	header="Student Details"
+	[modal]="true"
+	styleClass="p-fluid"
+>
+	<ng-template pTemplate="content">
+		<div class="p-field">
+			<label for="regNo">{{student.id}}</label>
+		</div>
+		<div class="p-field">
+			<label for="regNo">Registration No.</label>
+			<input
+				type="text"
+				pInputText
+				id="regNo"
+				[(ngModel)]="student.registrationNo"
+				required
+				autofocus
+			/>
+			<small
+				class="p-invalid"
+				*ngIf="submitted && !student.registrationNo"
+				>Name is required.</small
+			>
+		</div>
+		<div class="p-field">
+			<label for="firstName">First Name</label>
+			<input
+				type="text"
+				pInputText
+				id="firstName"
+				[(ngModel)]="student.firstName"
+				required
+				autofocus
+			/>
+			<small class="p-invalid" *ngIf="submitted && !student.firstName"
+				>Name is required.</small
+			>
+		</div>
+		<div class="p-field">
+			<label for="lastName">Last Name</label>
+			<input
+				type="text"
+				pInputText
+				id="lastName"
+				[(ngModel)]="student.lastName"
+				required
+				autofocus
+			/>
+			<small class="p-invalid" *ngIf="submitted && !student.lastName"
+				>Name is required.</small
+			>
+		</div>
+		<div class="p-field">
+			<label for="email">email</label>
+			<input
+				type="text"
+				pInputText
+				id="email"
+				[(ngModel)]="student.email"
+				required
+				autofocus
+			/>
+			<small class="p-invalid" *ngIf="submitted && !student.lastName"
+				>Name is required.</small
+			>
+		</div>
+		<div class="p-field">
+			<div class="p-field">
+				<label for="contactNo">Contact No.</label>
+				<input
+					type="text"
+					pInputText
+					id="contactNo"
+					[(ngModel)]="student.phoneNo"
+					required
+					autofocus
+				/>
+				<small class="p-invalid" *ngIf="submitted && !student.phoneNo"
+					>Name is required.</small
+				>
+			</div>
+			<div class="p-field">
+				<div class="p-field">
+					<label for="session">Session</label>
+					<input
+						type="text"
+						pInputText
+						id="session"
+						[(ngModel)]="student.session"
+						required
+						autofocus
+					/>
+					<small
+						class="p-invalid"
+						*ngIf="submitted && !student.session"
+						>Name is required.</small
+					>
+				</div>
+				<div class="p-field"></div>
+			</div>
+		</div>
+	</ng-template>
 
-  <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
-  </ng-template>
+	<ng-template pTemplate="footer">
+		<button
+			pButton
+			pRipple
+			label="Cancel"
+			icon="pi pi-times"
+			class="p-button-text"
+			(click)="hideDialog()"
+		></button>
+		<button
+			pButton
+			pRipple
+			label="Save"
+			icon="pi pi-check"
+			class="p-button-text"
+			(click)="saveStudent()"
+		></button>
+	</ng-template>
+</p-dialog>
+
+<p-dialog
+	[(visible)]="attachCourseDialog"
+	[style]="{width: '450px'}"
+	header="Attach Course"
+	[modal]="true"
+	styleClass="p-fluid"
+>
+	<ng-template pTemplate="content"> </ng-template>
+
+	<ng-template pTemplate="footer">
+		<button
+			pButton
+			pRipple
+			label="Cancel"
+			icon="pi pi-times"
+			class="p-button-warning"
+			(click)="hideDialog()"
+		></button>
+		<button
+			pButton
+			pRipple
+			label="Save"
+			icon="pi pi-check"
+			class="p-button-primary"
+			(click)="saveCourses()"
+		></button>
+	</ng-template>
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

@@ -36,6 +36,7 @@ export class CoursesService {
 			`${environment.apiUrl}/course/teacher/${teacher}`
 		);
 	}
+
 	getCourses$() {
 		return this._course$.asObservable();
 	}
