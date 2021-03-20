@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PerformanceCalculator.API.Specifications;
 using PerformanceCalculator.Business.Services.Interfaces;
-using PerformanceCalculator.Common.Constants;
-using PerformanceCalculator.Common.Dtos;
 using PerformanceCalculator.Common.Models;
 
 namespace PerformanceCalculator.API.Controllers
@@ -17,13 +13,13 @@ namespace PerformanceCalculator.API.Controllers
     [Route("api/[controller]")]
     public class CourseController : ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly IDbService<Course> _service;
+        private readonly IDbService<Exam> _examService;
 
-        public CourseController(IMapper mapper, IDbService<Course> service)
+        public CourseController(IDbService<Course> service, IDbService<Exam> examService)
         {
-            _mapper = mapper;
             _service = service;
+            _examService = examService;
         }
 
         [HttpGet]
@@ -32,6 +28,7 @@ namespace PerformanceCalculator.API.Controllers
             var data = await _service.GetAsync();
             return Ok(data);
         }
+
         [HttpGet("teacher/{teacherMail}")]
         public async Task<ActionResult<IReadOnlyList<Course>>> GetCourseTeacherAsync(string teacherMail)
         {
@@ -49,7 +46,7 @@ namespace PerformanceCalculator.API.Controllers
             {
                 return NotFound();
             }
-            
+
             return Ok(data);
         }
 
@@ -98,6 +95,19 @@ namespace PerformanceCalculator.API.Controllers
 
             await _service.DeleteAsync(course);
             return NoContent();
+        }
+
+        [HttpPut("add-exam/{courseId}/{examId}")]
+        public async Task<ActionResult<IReadOnlyList<Course>>> AddExamAsync(Guid courseId, Guid examId)
+        {
+            var data = await _service.GetByIdAsync(courseId);
+            var exam = await _examService.GetByIdAsync(examId);
+            data.Exams = new List<Exam>
+            {
+                exam
+            };
+            await _service.UpdateAsync(data);
+            return Ok(data);
         }
     }
 }
