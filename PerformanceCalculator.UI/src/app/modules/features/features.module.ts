@@ -16,6 +16,10 @@ import { ExamsService } from "./services/exams.service";
 import { ResultsService } from "./services/results.service";
 import { StudentsService } from "./services/students.service";
 import { TeachersService } from "./services/teachers.service";
+import { CourseStepComponent } from './components/marks/stepers/course-step/course-step.component';
+import { StudentStepComponent } from './components/marks/stepers/student-step/student-step.component';
+import { ObtainedMarkStepComponent } from './components/marks/stepers/obtained-mark-step/obtained-mark-step.component';
+import { ConfirmationComponent } from './components/marks/stepers/confirmation/confirmation.component';
 
 @NgModule({
 	declarations: [
@@ -25,6 +29,10 @@ import { TeachersService } from "./services/teachers.service";
 		ExamsComponent,
 		MarksComponent,
 		CoursesComponent,
+		CourseStepComponent,
+		StudentStepComponent,
+		ObtainedMarkStepComponent,
+		ConfirmationComponent,
 	],
 	imports: [
 		CommonModule,

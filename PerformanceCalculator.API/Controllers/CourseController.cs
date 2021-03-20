@@ -32,6 +32,13 @@ namespace PerformanceCalculator.API.Controllers
             var data = await _service.GetAsync();
             return Ok(data);
         }
+        [HttpGet("teacher/{teacherMail}")]
+        public async Task<ActionResult<IReadOnlyList<Course>>> GetCourseTeacherAsync(string teacherMail)
+        {
+            var data = await _service.GetAsync();
+
+            return Ok(data);
+        }
 
         [HttpGet("{id}", Name = "GetCourseById")]
         public async Task<ActionResult<Course>> GetByIdAsync(Guid id)
