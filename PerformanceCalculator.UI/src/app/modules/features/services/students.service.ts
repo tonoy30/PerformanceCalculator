@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import {Student} from '../../../models/student';
 
 @Injectable({
   providedIn: 'root',
@@ -13,5 +14,17 @@ export class StudentsService {
   }
   getStudentDetails(id: string) {
     return this.http.get(`${environment.apiUrl}/student/${id}`);
+  }
+
+  updateStudent(id: string, student: Student) {
+    return this.http.put(`${environment.apiUrl}/Student/${id}`, student);
+  }
+
+  createStudent(student: Student) {
+    return this.http.post(`${environment.apiUrl}/student`, student);
+  }
+
+  deleteStudent(id: string) {
+    return this.http.delete(`${environment.apiUrl}/student/${id}`);
   }
 }

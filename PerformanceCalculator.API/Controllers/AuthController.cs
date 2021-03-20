@@ -11,7 +11,7 @@ using PerformanceCalculator.Common.Models.Auth;
 namespace PerformanceCalculator.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
