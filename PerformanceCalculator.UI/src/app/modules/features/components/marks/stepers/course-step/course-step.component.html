@@ -1,0 +1,32 @@
+<div class="stepsdemo-content">
+	<p-card>
+		<ng-template pTemplate="title">
+			Course Information
+		</ng-template>
+		<ng-template pTemplate="subtitle">
+			Enter your personal information
+		</ng-template>
+		<ng-template pTemplate="content">
+			<div class="p-fluid">
+				<div class="p-field">
+					<label for="courseName">Course Name</label>
+					<p-autoComplete
+						[(ngModel)]="courseName"
+						[suggestions]="courseNames"
+						(completeMethod)="search($event)"
+					></p-autoComplete>
+				</div>
+			</div>
+		</ng-template>
+		<ng-template pTemplate="footer">
+			<div class="p-grid p-nogutter p-justify-end">
+				<p-button
+					label="Next"
+					(onClick)="nextPage()"
+					icon="pi pi-angle-right"
+					iconPos="right"
+				></p-button>
+			</div>
+		</ng-template>
+	</p-card>
+</div>

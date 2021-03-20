@@ -27,4 +27,9 @@ export class CoursesService {
 	deleteCourse(id: string) {
 		return this.http.delete(`${environment.apiUrl}/course/${id}`);
 	}
+	getCourseByTeacher(teacher: string) {
+		return this.http.get<Courses[]>(
+			`${environment.apiUrl}/course/teacher/${teacher}`
+		);
+	}
 }
