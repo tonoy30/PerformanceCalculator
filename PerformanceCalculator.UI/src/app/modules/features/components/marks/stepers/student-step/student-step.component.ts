@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Courses } from "src/app/models/course";
 import { CoursesService } from "src/app/modules/features/services/courses.service";
 import { StudentsService } from "src/app/modules/features/services/students.service";
 
@@ -12,6 +13,8 @@ import { StudentsService } from "src/app/modules/features/services/students.serv
 export class StudentStepComponent implements OnInit {
 	studentForm: FormGroup;
 	studentNames: string[] = [];
+	students: any[] = [];
+	courses: Courses;
 	constructor(
 		private router: Router,
 		private courseService: CoursesService,
@@ -24,7 +27,16 @@ export class StudentStepComponent implements OnInit {
 			id: [null, [Validators.required]],
 			name: ["", [Validators.required]],
 		});
-		this.courseService.getCourses$().subscribe((res) => console.log(res));
+
+		this.courseService.getCourses$().subscribe((res) => {
+			if (res === "undefined") {
+				this.prevPage();
+			}
+			this.courses = res;
+		});
+		this.studentsService
+			.getStudentByCourseId(this.courses.id)
+			.subscribe((res) => (this.students = res));
 	}
 	nextPage() {
 		this.router.navigate(["marks/obtained-mark"]);
@@ -32,5 +44,18 @@ export class StudentStepComponent implements OnInit {
 	prevPage() {
 		this.router.navigate(["marks/course"]);
 	}
-	search(event: any): void {}
+	search(event: any): void {
+		let filtered: string[] = [];
+		let query = event.query;
+		for (let i = 0; i < this.students.length; i++) {
+			let student = this.students[i];
+			if (
+				student.email.toLowerCase().indexOf(query.toLowerCase()) === 0
+			) {
+				this.studentForm.get("id").setValue(student.id);
+				filtered.push(student.email);
+			}
+		}
+		this.studentNames = filtered;
+	}
 }
