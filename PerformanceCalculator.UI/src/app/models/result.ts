@@ -2,9 +2,9 @@ export interface Result {
 	id: string;
 	regNo: string;
 	name: string;
-	courses: Course[];
+	courses: ResultCourse[];
 }
-export interface Course {
+export interface ResultCourse {
 	id: string;
 	title: string;
 	code: string;

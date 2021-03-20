@@ -11,6 +11,7 @@ import { AuthService } from './auth.service';
 export class AuthGuardService implements CanActivate {
   constructor(public authService: AuthService, public router: Router) {}
 
+  // tslint:disable-next-line:typedef
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authService.currentUserValue;
     if (currentUser) {

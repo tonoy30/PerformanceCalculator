@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Courses } from "src/app/models/course";
+import { Course } from "src/app/models/course";
 import { CoursesService } from "src/app/modules/features/services/courses.service";
 import { StudentsService } from "src/app/modules/features/services/students.service";
 
@@ -14,7 +14,7 @@ export class StudentStepComponent implements OnInit {
 	studentForm: FormGroup;
 	studentNames: string[] = [];
 	students: any[] = [];
-	courses: Courses;
+	courses: Course;
 	constructor(
 		private router: Router,
 		private courseService: CoursesService,

@@ -1,29 +1,29 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Courses } from "src/app/models/course";
+import { Course } from "src/app/models/course";
 import { environment } from "src/environments/environment";
 
 @Injectable({
 	providedIn: "root",
 })
 export class CoursesService {
-	private _course$: BehaviorSubject<Courses> = new BehaviorSubject<Courses>(
+	private _course$: BehaviorSubject<Course> = new BehaviorSubject<Course>(
 		null
 	);
 	constructor(private http: HttpClient) {}
 	getCourses() {
-		return this.http.get<Courses[]>(`${environment.apiUrl}/course`);
+		return this.http.get<Course[]>(`${environment.apiUrl}/course`);
 	}
 	getCourseById(id: string) {
-		return this.http.get<Courses>(`${environment.apiUrl}/course/${id}`);
+		return this.http.get<Course>(`${environment.apiUrl}/course/${id}`);
 	}
-	createCourse(course: Courses) {
+	createCourse(course: Course) {
 		course.semester = +course.semester;
-		return this.http.post<Courses>(`${environment.apiUrl}/course`, course);
+		return this.http.post<Course>(`${environment.apiUrl}/course`, course);
 	}
-	updateCourse(id: string, course: Courses) {
-		return this.http.put<Courses>(
+	updateCourse(id: string, course: Course) {
+		return this.http.put<Course>(
 			`${environment.apiUrl}/course/${id}`,
 			course
 		);
@@ -32,14 +32,14 @@ export class CoursesService {
 		return this.http.delete(`${environment.apiUrl}/course/${id}`);
 	}
 	getCourseByTeacher(teacher: string) {
-		return this.http.get<Courses[]>(
+		return this.http.get<Course[]>(
 			`${environment.apiUrl}/course/teacher/${teacher}`
 		);
 	}
 	getCourses$() {
 		return this._course$.asObservable();
 	}
-	setCourse$(course: Courses) {
+	setCourse$(course: Course) {
 		this._course$.next(course);
 	}
 }

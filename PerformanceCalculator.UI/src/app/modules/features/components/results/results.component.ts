@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Course, Result } from 'src/app/models/result';
+import { ResultCourse, Result } from 'src/app/models/result';
 
 const ELEMENT_DATA: Result[] = [
   {
@@ -83,7 +83,7 @@ const ELEMENT_DATA: Result[] = [
   },
 ];
 
-const courese: Course[] = [
+const courese: ResultCourse[] = [
   { id: '121', code: 'SWE450', title: 'Project 450' },
   { id: '122', code: 'SWE451', title: 'Project 451' },
   { id: '123', code: 'SWE453', title: 'Project 453' },
