@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Courses } from "src/app/models/course";
+import { Course } from "src/app/models/course";
 import { User } from "src/app/models/user";
 import { CoursesService } from "src/app/modules/features/services/courses.service";
 import { AuthService } from "src/app/services/auth.service";
@@ -12,7 +12,7 @@ import { AuthService } from "src/app/services/auth.service";
 })
 export class CourseStepComponent implements OnInit {
 	submitted: boolean = false;
-	courses: Courses[] = [];
+	courses: Course[] = [];
 	courseName: string = "";
 	courseNames: string[] = [];
 	currentUser: User;
