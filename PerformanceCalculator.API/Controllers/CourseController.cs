@@ -49,9 +49,8 @@ namespace PerformanceCalculator.API.Controllers
             {
                 return NotFound();
             }
-
-            var mappedData = _mapper.Map<Course, CourseDto>(data);
-            return Ok(mappedData);
+            
+            return Ok(data);
         }
 
         [HttpPost]

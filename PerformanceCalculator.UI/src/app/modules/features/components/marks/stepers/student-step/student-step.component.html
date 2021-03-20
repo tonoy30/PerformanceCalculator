@@ -1,12 +1,23 @@
 <div class="stepsdemo-content">
 	<p-card>
 		<ng-template pTemplate="title">
-			Seat Information
+			Student Information
 		</ng-template>
 		<ng-template pTemplate="subtitle">
-			Choose your seat
+			Choose your student
 		</ng-template>
-		<ng-template pTemplate="content"> </ng-template>
+		<ng-template pTemplate="content">
+			<div class="p-fluid">
+				<form [formGroup]="studentForm" class="p-field">
+					<label for="courseName">Student Name</label>
+					<p-autoComplete
+						formControlName="name"
+						[suggestions]="studentNames"
+						(completeMethod)="search($event)"
+					></p-autoComplete>
+				</form>
+			</div>
+		</ng-template>
 		<ng-template pTemplate="footer">
 			<div class="p-grid p-nogutter p-justify-between">
 				<p-button
@@ -19,6 +30,7 @@
 					(onClick)="nextPage()"
 					icon="pi pi-angle-right"
 					iconPos="right"
+					[disabled]="studentForm.invalid"
 				></p-button>
 			</div>
 		</ng-template>

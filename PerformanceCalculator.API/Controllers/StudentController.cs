@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,16 +15,27 @@ namespace PerformanceCalculator.API.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IDbService<Student> _service;
+        private readonly IDbService<Course> _courseService;
 
-        public StudentController(IDbService<Student> service)
+        public StudentController(IDbService<Student> service, IDbService<Course> courseService)
         {
             _service = service;
+            _courseService = courseService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Student>>> GetAsync()
         {
             var data = await _service.GetAsync();
+            return Ok(data);
+        }
+
+        [HttpGet("students/{courseId}")]
+        public async Task<ActionResult<IReadOnlyList<Student>>> GetStudentByCourseAsync(Guid courseId)
+        {
+            var spec = new StudentWithCoursesSpecification();
+            var students = await _service.ListAsync(spec);
+            var data = students.Where(s => s.Courses.Any(o => o.Id == courseId)).ToList();
             return Ok(data);
         }
 
@@ -90,6 +102,19 @@ namespace PerformanceCalculator.API.Controllers
 
             await _service.DeleteAsync(student);
             return NoContent();
+        }
+
+        [HttpPut("add-course/{studentId}/{courseId}")]
+        public async Task<ActionResult<Student>> AddCourseAsync(Guid studentId, Guid courseId)
+        {
+            var course = await _courseService.GetByIdAsync(courseId);
+            var student = await _service.GetByIdAsync(studentId);
+            student.Courses = new List<Course>
+            {
+                course
+            };
+            await _service.UpdateAsync(student);
+            return student;
         }
     }
 }
