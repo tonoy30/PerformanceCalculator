@@ -1,165 +1,103 @@
 <p-toast></p-toast>
 
 <div class="card">
-	<p-toolbar styleClass="p-mb-4">
-		<ng-template pTemplate="left">
-			<button
-				pButton
-				pRipple
-				label="New"
-				icon="pi pi-plus"
-				class="p-button-success p-mr-2"
-				(click)="create()"
-			></button>
-		</ng-template>
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+              (click)="openNew()"></button>
+    </ng-template>
+  </p-toolbar>
 
-		<ng-template pTemplate="right">
-			<p-fileUpload
-				mode="basic"
-				accept="image/*"
-				[maxFileSize]="1000000"
-				label="Import"
-				chooseLabel="Import"
-				class="p-mr-2 p-d-inline-block"
-			></p-fileUpload>
-		</ng-template>
-	</p-toolbar>
-	<p-table
-		#dt
-		[value]="exams"
-		[rows]="rows"
-		[paginator]="true"
-		[globalFilterFields]="['title']"
-		[rowHover]="true"
-		dataKey="id"
-		currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-		[showCurrentPageReport]="true"
-	>
-		<ng-template pTemplate="caption">
-			<div class="p-d-flex p-ai-center p-jc-between">
-				<h1 class="p-m-0">Manage Exams</h1>
-				<span class="p-input-icon-left">
-					<i class="pi pi-search"></i>
-					<input
-						pInputText
-						type="text"
-						(input)="onSearch(dt, $event)"
-						placeholder="Search..."
-					/>
-				</span>
-			</div>
-		</ng-template>
-		<ng-template pTemplate="header">
-			<tr>
-				<th pSortableColumn="title">
-					Title <p-sortIcon field="title"></p-sortIcon>
-				</th>
-				<th pSortableColumn="totalMark">
-					Total Mark <p-sortIcon field="totalMark"></p-sortIcon>
-				</th>
-				<th>
-					Exam Type
-				</th>
-				<th></th>
-			</tr>
-		</ng-template>
-		<ng-template pTemplate="body" let-exam>
-			<tr>
-				<td>{{exam.title}}</td>
-				<td>{{exam.totalMark}}</td>
-				<td>{{exam.examTypeEnum}}</td>
-				<td>
-					<button
-						pButton
-						pRipple
-						icon="pi pi-pencil"
-						class="p-button-rounded p-button-success p-mr-2"
-						(click)="editExam(exam.id, exam)"
-					></button>
-					<button
-						pButton
-						pRipple
-						icon="pi pi-trash"
-						class="p-button-rounded p-button-warning"
-						(click)="deleteExam(exam)"
-					></button>
-				</td>
-			</tr>
-		</ng-template>
-		<ng-template pTemplate="summary">
-			<div class="p-d-flex p-ai-center p-jc-between">
-				In total there are {{exams ? exams.length : 0 }} exams.
-			</div>
-		</ng-template>
-	</p-table>
-
-	<p-dialog
-		[(visible)]="examDialog"
-		[style]="{width: '850px'}"
-		header="Product Details"
-		[modal]="true"
-		styleClass="p-fluid"
-	>
-		<ng-template pTemplate="content">
-			<div class="card">
-				<div class="p-fluid p-formgrid p-grid">
-					<div class="p-field p-col-12 p-md-6">
-						<label for="title">Title</label>
-						<input
-							id="title"
-							type="text"
-							pInputText
-							[(ngModel)]="exam.title"
-							required
-							autofocus
-						/>
-					</div>
-					<div class="p-field p-col-12 p-md-6">
-						<label for="code">Total Mark</label>
-						<input
-							id="code"
-							type="text"
-							pInputText
-							[(ngModel)]="exam.totalMark"
-							required
-							autofocus
-						/>
-					</div>
-					<div class="p-field p-col-12 p-md-3">
-						<label for="credit">Exam Type</label>
-						<input
-							id="examTypeEnum"
-							type="number"
-							min="1"
-							max="4"
-							pInputText
-							[(ngModel)]="exam.examTypeEnum"
-							required
-							autofocus
-						/>
-					</div>
-				</div>
-			</div>
-		</ng-template>
-
-		<ng-template pTemplate="footer">
-			<button
-				pButton
-				pRipple
-				label="Cancel"
-				icon="pi pi-times"
-				class="p-button-info"
-				(click)="hideDialog()"
-			></button>
-			<button
-				pButton
-				pRipple
-				label="Save"
-				icon="pi pi-check"
-				class="p-button-danger"
-				(click)="saveExam()"
-			></button>
-		</ng-template>
-	</p-dialog>
+  <p-table #dt [value]="exams" [rows]="10" [paginator]="true"
+           [globalFilterFields]="['name','totalMark','obtainedMark', 'examType']"
+           [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h5 class="p-m-0">Manage Exams</h5>
+        <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onSearch(dt, $event)" placeholder="Search..."/>
+                </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="name">Name
+          <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="totalMark">Total Mark
+          <p-sortIcon field="totalMark"></p-sortIcon>
+        </th>
+        <th pSortableColumn="obtainedMark">Obtained Marks
+          <p-sortIcon field="obtainedMark"></p-sortIcon>
+        </th>
+        <th pSortableColumn="examType">Exam Type
+          <p-sortIcon field="examType"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="product"></p-tableCheckbox>
+        </td>
+        <td>{{product.title}}</td>
+        <td>{{product.totalMark}}</td>
+        <td>{{product.obtainedMark}}</td>
+        <td>{{product.examTypeEnum}}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                  (click)="editProduct(product)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                  (click)="deleteProduct(product)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        In total there are {{exams ? exams.length : 0 }} products.
+      </div>
+    </ng-template>
+  </p-table>
 </div>
+
+<p-dialog [(visible)]="teacherDialog" [style]="{width: '450px'}" header="Exam Details" [modal]="true"
+          styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="name">Course Title</label>
+      <input type="text" pInputText id="name" [(ngModel)]="exam.title" required autofocus/>
+      <small class="p-invalid" *ngIf="submitted && !exam.title">Name is required.</small>
+    </div>
+    <div class="p-field">
+      <label for="totalMark">Total Mark</label>
+      <input type="number" pInputText id="totalMark" [(ngModel)]="exam.totalMark" required autofocus/>
+      <small class="p-invalid" *ngIf="submitted && !exam.totalMark">Name is required.</small>
+    </div>
+    <div class="p-field">
+      <label for="obtainedMark">Obtained Mark</label>
+      <input type="number" pInputText id="obtainedMark" [(ngModel)]="exam.obtainedMark" required autofocus/>
+      <small class="p-invalid" *ngIf="submitted && !exam.obtainedMark">Name is required.</small>
+    </div>
+    <div class="p-field">
+      <div class="p-field">
+        <label for="examType">Exam Type</label>
+        <input type="number" pInputText id="examType" [(ngModel)]="exam.examTypeEnum" required autofocus/>
+        <small class="p-invalid" *ngIf="submitted && !exam.examTypeEnum">Name is required.</small>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+  </ng-template>
+</p-dialog>
+
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
