@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import { Course } from "src/app/models/course";
 import { environment } from "src/environments/environment";
 
@@ -7,6 +8,9 @@ import { environment } from "src/environments/environment";
 	providedIn: "root",
 })
 export class CoursesService {
+	private _course$: BehaviorSubject<Course> = new BehaviorSubject<Course>(
+		null
+	);
 	constructor(private http: HttpClient) {}
 	getCourses() {
 		return this.http.get<Course[]>(`${environment.apiUrl}/course`);
@@ -31,5 +35,11 @@ export class CoursesService {
 		return this.http.get<Course[]>(
 			`${environment.apiUrl}/course/teacher/${teacher}`
 		);
+	}
+	getCourses$() {
+		return this._course$.asObservable();
+	}
+	setCourse$(course: Course) {
+		this._course$.next(course);
 	}
 }

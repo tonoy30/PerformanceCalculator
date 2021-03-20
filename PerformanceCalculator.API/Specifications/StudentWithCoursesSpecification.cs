@@ -10,5 +10,10 @@ namespace PerformanceCalculator.API.Specifications
         {
             AddInclude(x => x.Courses);
         }
+
+        public StudentWithCoursesSpecification()
+        {
+            AddInclude(x => x.Courses);
+        }
     }
 }

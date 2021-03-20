@@ -8,20 +8,21 @@
 		</ng-template>
 		<ng-template pTemplate="content">
 			<div class="p-fluid">
-				<div class="p-field">
+				<form [formGroup]="courseForm" class="p-field">
 					<label for="courseName">Course Name</label>
 					<p-autoComplete
-						[(ngModel)]="courseName"
+						formControlName="title"
 						[suggestions]="courseNames"
 						(completeMethod)="search($event)"
 					></p-autoComplete>
-				</div>
+				</form>
 			</div>
 		</ng-template>
 		<ng-template pTemplate="footer">
 			<div class="p-grid p-nogutter p-justify-end">
 				<p-button
 					label="Next"
+					[disabled]="courseForm.invalid"
 					(onClick)="nextPage()"
 					icon="pi pi-angle-right"
 					iconPos="right"

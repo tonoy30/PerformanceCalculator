@@ -16,14 +16,11 @@ namespace PerformanceCalculator.API.Controllers
     {
         private readonly IDbService<Teacher> _service;
         private readonly IDbService<Course> _courseService;
-        private readonly ApplicationDbContext _context;
 
-        public TeacherController(IDbService<Teacher> service, IDbService<Course> courseService,
-            ApplicationDbContext context)
+        public TeacherController(IDbService<Teacher> service, IDbService<Course> courseService)
         {
             _service = service;
             _courseService = courseService;
-            _context = context;
         }
 
         [HttpGet]
